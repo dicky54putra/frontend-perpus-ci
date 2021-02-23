@@ -7,20 +7,26 @@
                     <div class="col-md-8">
                         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                                <?php
+                                $counter = 1;
+                                $foto = $this->db->get_where('foto', ['nama_tabel' => 'frontend_buku_tamu', 'id_tabel' => 1])->result();
+                                foreach ($foto as $foto) {
+                                ?>
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?= $counter - 1 ?>" class="<?= ($counter <= 1) ? 'active' : '' ?>"></li>
+                                    <?php $counter++ ?>
+                                <?php } ?>
                             </ol>
                             <div class="carousel-inner rounded height-3">
-                                <div class="carousel-item active">
-                                    <img src="http://localhost/sman5semarang.klikgss.com/backend/web/images/aaa.jpg" class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="http://localhost/sman5semarang.klikgss.com/backend/web/images/aaa.jpg" class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="http://localhost/sman5semarang.klikgss.com/backend/web/images/aaa.jpg" class="d-block w-100" alt="...">
-                                </div>
+                                <?php
+                                $counter = 1;
+                                $foto = $this->db->get_where('foto', ['nama_tabel' => 'frontend_buku_tamu', 'id_tabel' => 1])->result();
+                                foreach ($foto as $foto) {
+                                ?>
+                                    <div class="carousel-item <?= ($counter <= 1) ? 'active' : '' ?>">
+                                        <img src="<?= substr(base_url(), 0, -13) ?>backend/web/upload/<?= $foto->foto ?>" class="d-block w-100" alt="<?= $foto->foto ?>">
+                                    </div>
+                                    <?php $counter++ ?>
+                                <?php } ?>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -107,7 +113,7 @@
                         </div>
                         <div class="row ">
                             <?php
-                            foreach ($buku_favorit as $val) {
+                            foreach ($buku_terbaru as $val) {
                             ?>
                                 <div class="col-md-2 mb-4" style="padding: 5px;margin: 5px;">
                                     <div class="card shadow card-product">

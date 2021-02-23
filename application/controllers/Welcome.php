@@ -7,13 +7,13 @@ class Welcome extends CI_Controller
 	{
 		if (!empty($_GET['q'])) {
 			$q_semua_buku = $this->db->query("SELECT * FROM pp_buku WHERE judul_buku LIKE '%$_GET[q]%'")->result();
-			// redirect(base_url("?q=$_GET[q]#semua-buku"));
 		} else {
 			$q_semua_buku = $this->db->get('pp_buku')->result();
 		}
 		$data = [
 			'title' => 'Perpustakaan',
-			'buku_favorit' => $this->db->get('pp_buku')->result(),
+			'buku_favorit' => $this->db->query("SELECT pp_buku.*, COUNT(pp_buku.id_buku) as jumlah FROM `pp_peminjaman_detail` LEFT JOIN pp_buku_stok ON pp_buku_stok.id_buku_stok=pp_peminjaman_detail.id_buku_stok LEFT JOIN pp_buku ON pp_buku.id_buku=pp_buku_stok.id_buku ORDER BY jumlah DESC")->result(),
+			'buku_terbaru' => $this->db->query("SELECT * FROM pp_buku ORDER BY id_buku DESC LIMIT 5")->result(),
 			'semua_buku' => $q_semua_buku,
 			'data_anggota' => $this->db->get('pp_anggota')->result(),
 		];
